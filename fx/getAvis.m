@@ -11,6 +11,11 @@ possibleModalities = {
     'reflect';
     'visible';
     'ICG';
+    'PMT1CF'; % added the following for WAIVS -- JDR
+    'PMT2NW';
+    'PMT3NE';
+    'PMT4SE';
+    'PMT5SW';
     };    
 
 nDmbs = numel(dmb);
