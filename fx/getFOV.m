@@ -52,8 +52,12 @@ for i=1:numel(videoNames)
     % Check if this video number can be found in a savior file name
     theseMatFiles = find(~cellfun(@isempty, strfind(saviorNames, ['_',thisVidNum,'.mat']))); %#ok<*EFIND>
     if isempty(theseMatFiles)
-        fprintf(err_fid, 'No .mat file found for %s',videoNames{i});
-        fprintf('No .mat file found for %s',videoNames{i});
+        %fprintf(err_fid, 'No .mat file found for %s',videoNames{i});
+        %fprintf('No .mat file found for %s',videoNames{i});
+        fov = 1.5;
+        fprintf(err_fid, 'No .mat file found for %s, defaulting to %d deg',videoNames{i},fov);
+        fprintf('No .mat file found for %s, defaulting to %d deg',videoNames{i},fov);
+        fovs(i)=fov;
         continue;
     end
     
