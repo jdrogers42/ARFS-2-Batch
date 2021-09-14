@@ -1,7 +1,7 @@
 import os
 import sys
 import getopt
-import cPickle
+import pickle
 
 # Command line arguments
 argList = ["name=", "ref=", "dmb=", "frames="]
@@ -34,14 +34,19 @@ possibleModalities = [
     'reflect',
     'binary',
     'visible',
-    'ICG']
+    'ICG',
+    'PMT1CF', # these are for WAIVS -- JDR
+    'PMT2NW',
+    'PMT3NE',
+    'PMT4SE',
+    'PMT5SW'] 
 nMods = len(possibleModalities)
 
 
 def main():
     # Load .dmb
     fid = open(dmb,'r')
-    pick = cPickle.load(fid)
+    pick = pickle.load(fid)
     fid.close()
 
     # Change parameters
@@ -97,7 +102,7 @@ def main():
 
     # Write new .dmb
     newfid = open(newName,'w')
-    cPickle.dump(pick,newfid)
+    pickle.dump(pick,newfid)
     newfid.close()
 
 
