@@ -68,10 +68,13 @@ def main():
             if m in prefixParts:
                 indxMod = prefixParts.index(m)
                 break
-        indxVidNum = indxMod+1
-        vidNum = prefixParts[indxVidNum]
+        #indxVidNum = indxMod+1
+        #vidNum = prefixParts[indxVidNum]
         # This assumes the vid number always follows the modality
-
+        
+        #indxVidNum = -1 # instead, assume vid num is last part -- JDR 20211006
+        vidNum = prefixParts[-1]
+        
         # Then change the video number in all the secondary sequences to
         # match the primary
         seq2 = pick['secondary_sequences_file_names']
@@ -85,7 +88,9 @@ def main():
                 if m in prefixParts:
                     indxMod = prefixParts.index(m)
                     break
-            prefixParts[indxMod+1] = vidNum
+            #prefixParts[indxMod+1] = vidNum
+            # instead, assume vid num is last part -- JDR 20211006
+            prefixParts[-1] = vidNum
             prefix = '_'.join(prefixParts)
             pick['secondary_sequences_file_names'][i] = prefix + '.avi'
 
