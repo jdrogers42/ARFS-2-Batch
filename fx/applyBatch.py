@@ -4,15 +4,16 @@ import getopt
 import pickle
 
 # Command line arguments
-argList = ["name=", "ref=", "dmb=", "frames="]
+argList = ["name=", "ref=", "dmb=", "frames=", "desinusoidfname="]
 
 name = ''   # Name of the video to which the batch parameters apply
 ref = ''     # Reference frame
 dmb = ''    # Path and file name of the dmb being applied
 frames = ''  # Number of frames in video, can be different from template
+desinusoidfname = ''  # Name of desinusoid file
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:], 'n:r:d:f:', argList)
+    opts, args = getopt.getopt(sys.argv[1:], 'n:r:d:f:s:', argList)
 except getopt.GetoptError:
     print('unknown error')
     sys.exit(2)
@@ -25,6 +26,8 @@ for opt, arg in opts:
         dmb = arg
     elif opt in ('-f', "--frames"):
         frames = arg
+    elif opt in ('-s', "--desinusoidfname"):
+        desinusoidfname = arg
 
 possibleModalities = [
     'confocal',
@@ -57,6 +60,7 @@ def main():
     pick['user_defined_suffix'] = '_ref_' + ref + '_lps_' + str(lps) + \
         '_lbss_' + str(lbss)
     pick['n_frames'] = frames
+    pick['desinusoid_data_filename'] = desinusoidfname
 
     # Handle secondary sequences
     if pick['secondary_sequences_file_names']:

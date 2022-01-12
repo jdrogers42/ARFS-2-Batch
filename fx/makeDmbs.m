@@ -1,4 +1,4 @@
-function rfList = makeDmbs( dmb, data )
+function rfList = makeDmbs( dmb, data, desinusoidfname )
 %makeDmbs Makes .dmb's based on the user input and arfs data
 
 p       = dmb.pack;
@@ -46,14 +46,14 @@ end
 pyScriptffName = fullfile(pwd,'fx','applyBatch.py');
 for k=1:numel(rfList)
     try
-        eval(sprintf('! "%s" -n "%s" -r %i -d "%s" -f %i', ...
+        eval(sprintf('! "%s" -n "%s" -r %i -d "%s" -f %i -s "%s"', ...
             pyScriptffName, data.name, rfList(k), ...
-            fullfile(dmb.path, dmb.name), data.nFrames));
+            fullfile(dmb.path, dmb.name), data.nFrames, desinusoidfname));
     catch
         python(pyScriptffName, ...
-            sprintf('-n "%s" -r %i -d "%s" -f %i', ...
+            sprintf('-n "%s" -r %i -d "%s" -f %i -s "%s"', ...
             data.name, rfList(k), ...
-            fullfile(dmb.path, dmb.name), data.nFrames));
+            fullfile(dmb.path, dmb.name), data.nFrames, desinusoidfname));
     end
 end
 

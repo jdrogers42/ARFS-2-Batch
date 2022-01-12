@@ -21,9 +21,9 @@ end
 try % try reading excel file for notes on FOVs
    xlsxfile = dir(fullfile(saviorpath,'*.xlsx'));
    notes = xlsread([xlsxfile(1).folder filesep xlsxfile(1).name]);
-   fprintf('Found xlsx file, %s \n',xlsxfile(0).name);
+   fprintf('Found xlsx file, %s \n',xlsxfile(1).name);
 catch 
-   fprintf('No xlsx file found');
+   fprintf('No xlsx file found\n');
 end
 
 %% Get all .avi files

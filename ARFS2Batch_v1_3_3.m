@@ -108,7 +108,8 @@ try
             end
             
             % Make .dmb's
-            dmb(i).arfs(j).rfList = makeDmbs(dmb(i), dmb(i).arfs(j).data);
+            desinusoidfname = fullfile(dmb.path, desinusoid_lut{cellfun(@(x) x == fov, desinusoid_lut(:,1)), 2})
+            dmb(i).arfs(j).rfList = makeDmbs(dmb(i), dmb(i).arfs(j).data, desinusoidfname);
             
             % Save progress
             save(fullfile(dmb(1).path,dmbdata_fname),'dmb');

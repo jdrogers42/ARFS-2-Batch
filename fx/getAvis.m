@@ -50,7 +50,7 @@ while i <= nDmbs
         end
     end
     % limited by fov
-    if 1 % don't limit by FOV (for later update when we handle switching desinusoid files according to FOV) -- JDR
+    if 0 % don't limit by FOV (for later update when we handle switching desinusoid files according to FOV) -- JDR
     removeThese = false(numel(aviList),1);
     for j=1:numel(aviListNoExt)
         nameparts   = strsplit(aviListNoExt{j},'_');
