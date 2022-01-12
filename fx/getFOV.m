@@ -18,6 +18,14 @@ for i=1:numel(saviorNames)
     saviorNames{i} = saviorData(i).name;
 end
 
+try % try reading excel file for notes on FOVs
+   xlsxfile = dir(fullfile(saviorpath,'*.xlsx'));
+   notes = xlsread([xlsxfile(1).folder filesep xlsxfile(1).name]);
+   fprintf('Found xlsx file, %s \n',xlsxfile(0).name);
+catch 
+   fprintf('No xlsx file found');
+end
+
 %% Get all .avi files
 videoData = dir(fullfile(videopath,'*.avi'));
 if isempty(videoData)
@@ -54,9 +62,20 @@ for i=1:numel(videoNames)
     if isempty(theseMatFiles)
         %fprintf(err_fid, 'No .mat file found for %s',videoNames{i});
         %fprintf('No .mat file found for %s',videoNames{i});
-        fov = 1.5;
-        fprintf(err_fid, 'No .mat file found for %s, defaulting to %d deg',videoNames{i},fov);
-        fprintf('No .mat file found for %s, defaulting to %d deg',videoNames{i},fov);
+        %fov = input("No matfile found, enter FOV to use:");
+        
+        %fprintf(err_fid, 'No .mat file found for %s, defaulting to %d deg',videoNames{i},fov);
+        fprintf('No .mat file found for %s, trying from xls notes file \n',videoNames{i});
+        try 
+            inotesthisvid = find(notes(:,1)==str2num(thisVidNum));
+            fov = notes(inotesthisvid,2);
+            fprintf('Using %d deg for vid %s \n',fov, videoNames{i});
+        catch 
+            fov=1.5;
+            fprintf('No FOV file found for %s, defaulting to %d \n',videoNames{i},fov);
+        end
+            
+        %fprintf('No .mat file found for %s, defaulting to %d deg \n',videoNames{i},fov);
         fovs(i)=fov;
         continue;
     end
@@ -69,10 +88,10 @@ for i=1:numel(videoNames)
             break;
         end
         if j==numel(theseMatFiles)
-            fprintf(err_fid,'No FOV found for %s',videoNames{i});
-            fprintf('No FOV found for %s',videoNames{i});
+            fprintf(err_fid,'No FOV found for %s \n',videoNames{i});
+            fprintf('No FOV found for %s \n',videoNames{i});
         end
-    end
+    end 
 end
 videoNumbers(removeThese)   = [];
 fovs(removeThese)           = [];
